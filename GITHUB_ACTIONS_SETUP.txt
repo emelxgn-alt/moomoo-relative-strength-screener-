@@ -1,0 +1,32 @@
+How to make GitHub run the moomoo screener
+The simple picture:
+GitHub can press the button.
+Your own computer must do the work.
+Moomoo OpenD must be open and logged in on that computer.
+Why?
+The screener talks to moomoo OpenD at 127.0.0.1:11111.
+That means "the same computer I am running on".
+If GitHub uses its normal cloud computer, 127.0.0.1 means GitHub's computer, not your computer.
+So it cannot see your moomoo OpenD.
+Use this setup:
+1. Put these files in your GitHub repo:
+   moomoo_relative_strength_screener.py
+   README.md
+   requirements.txt
+   .github/workflows/run-screener.yml
+2. Copy outputs/run-screener-self-hosted.yml into your repo as:
+   .github/workflows/run-screener.yml
+3. In GitHub, open your repo.
+4. Go to:
+   Settings > Actions > Runners > New self-hosted runner
+5. Choose Windows.
+6. GitHub will show commands. Run them on the same PC where moomoo OpenD runs.
+7. On that PC, install Python if needed.
+8. Open moomoo OpenD and log in.
+9. In GitHub, go to:
+   Actions > Run moomoo relative strength screener > Run workflow
+10. When it finishes, download the CSV from the workflow artifacts.
+Important:
+Keep the repo private if you are not sure.
+Do not upload passwords, account details, or private exported data.
+The schedule in the workflow runs Monday to Friday at 6:30 PM Singapore time.
