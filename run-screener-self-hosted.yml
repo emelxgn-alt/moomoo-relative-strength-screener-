@@ -1,0 +1,28 @@
+name: Run moomoo relative strength screener
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Runs Monday to Friday at 6:30 PM Singapore time.
+    # GitHub schedules use UTC, so this is 10:30 AM UTC.
+    - cron: "30 10 * * 1-5"
+
+jobs:
+  run-screener:
+    runs-on: self-hosted
+
+    steps:
+      - name: Get the repo files
+        uses: actions/checkout@v4
+
+      - name: Install Python packages
+        run: python -m pip install -r requirements.txt
+
+      - name: Run the screener
+        run: python moomoo_relative_strength_screener.py --output relative_strength_screener.csv
+
+      - name: Upload the result CSV
+        uses: actions/upload-artifact@v4
+        with:
+          name: relative-strength-screener-result
+          path: relative_strength_screener.csv
